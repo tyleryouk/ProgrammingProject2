@@ -1,0 +1,86 @@
+//Tyler Youk - Programming Project 2
+import java.lang.*;
+import java.io.*;
+
+public class HW2{
+  //instance fields & constructors (none)
+  
+  //methods
+   /*method should return true if the first x(int input value) characters of each input String are exactly the same. */
+  public static boolean samePrefix(String s, String s2, int m){
+    int counter = 0;
+    if(m > s.length() || m > s2.length()){
+      return false; } //auto return false if m is too large 
+    for(int letter = 0; letter < m; letter++){
+      if(s.charAt(letter) == s2.charAt(letter)){
+        counter++; } }
+    if(counter == m){
+      return true;}  else {  
+        return false;} }
+   /* method should return a string, first input string with the removal the second string as follows: 
+    (by occurence) (don't go back to start of string) (start at next character)
+  If there is no such character to remove, then nothing further is removed.*/
+  public static String subtract(String a, String b){
+    StringBuilder editedString = new StringBuilder("");
+    int bPlace = 0; //starting at b.charAt[0];  goes to b.charAt[1] if b.charAt[0] is subtracted
+    for(int i = 0; i < a.length(); i++){ //need to find first occurance
+      if(a.charAt(i) == b.charAt(bPlace)){
+        bPlace++;}  else  {
+          editedString.append(a.charAt(i)); } } //adding character if no occurance 
+    return(editedString.toString()); }
+  
+  /*indexWord takes two Strings as input and returns a String:
+The first string will be a string of at least 10 characters, and the second string will contain only digits. 
+The output string is formed by using each digit of the second string as an index to identify the character 
+from the first input string to add to the output.*/
+  public static String indexWord(String c, String d){
+    //checking if first string is at least 10 characters
+    if(c.length() < 10){ return null; }
+       
+    //If second string only contains digit, it will be an integer.  We will return void if it is not an integer
+
+    //we're going to assume d is only integers
+    StringBuilder sbC = new StringBuilder(); //StringBuilder for c (all 
+    StringBuilder sbD = new StringBuilder(); //Stringbuilder for d (all integers)
+    StringBuilder sbFinal = new StringBuilder(); //StringBuilder for final string
+    sbC.append(c); //sbC is now a StringBuilder of c
+    for(int i = 0; i < d.length(); i++){
+      char singleD = d.charAt(i);
+      int intD = Character.getNumericValue(singleD);
+      sbD.append(intD); 
+    }  //sbD is now a Stringbuilder of the integers of d
+    System.out.println("sbC: "+  sbC); 
+    System.out.println("sbD: "+  sbD); 
+    for(int i = 0; i < sbD.length(); i++){
+      char sbDchar = sbD.charAt(i); //single character at sbD
+      int singleIndex = Character.getNumericValue(sbDchar); //converting single character to integer
+      sbFinal.append(sbC.charAt(singleIndex)); //using integer in index method
+    }
+    return(sbFinal.toString());
+  }
+
+  
+  //other methods - main method for testing
+  public static void main(String[] args){
+    
+    HW2 tylerLuv = new  HW2();
+    System.out.print("Testing samePrefix: ");
+    System.out.print(tylerLuv.samePrefix("this is a test", "this is a trial", 11)); 
+    System.out.print(" " +tylerLuv.samePrefix("this is a test", "this is a trial", 12)); 
+    System.out.print(" " +tylerLuv.samePrefix("this is a test", "This is a trial", 4)); 
+    System.out.print(" " +tylerLuv.samePrefix("this is a test", "this is a test", 14));
+    System.out.println(" " +tylerLuv.samePrefix("this is a test", "this is a test", 15));
+      //should print: true false false true false
+    System.out.print("Testing subtract: ");
+    System.out.println(tylerLuv.subtract("gfedcbabcdefg", "acfa"));
+      //should print: gfedcbbdeg
+    System.out.print("Testing indexWord: "); //printing sbC and sbD for testing, as well as final return value
+    System.out.println(tylerLuv.indexWord("EHL ORT!.?", "102243610509")); //should print HELLO THERE?
+    System.out.println(tylerLuv.indexWord("EHL ORT!.?", "10224361050")); //should print HELLO THERE
+    System.out.println(tylerLuv.indexWord("not ten", "102243610509")); //should print null
+    System.out.println(tylerLuv.indexWord("This is over the length of ten", "384")); //so
+  }
+
+
+  
+}
